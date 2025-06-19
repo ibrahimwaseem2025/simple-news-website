@@ -1,0 +1,12 @@
+{% extends 'background.html' %}
+{% load static%}
+{% block title %}News{% endblock %}
+{% block content %}
+{% csrf_token %}
+<h1 class="page-header">About Us</h1>
+
+<a href="{% url 'home' %}">Go to Home Page</a>
+<div class="test-image">
+  <h1> this is an image</h1>
+</div>
+{% endblock content %}

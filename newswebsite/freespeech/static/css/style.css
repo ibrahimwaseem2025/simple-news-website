@@ -1,0 +1,313 @@
+
+.font {
+      font-family: "Roboto", serif;
+      font-optical-sizing: auto;
+      font-weight: 400;
+      font-style: normal;
+      font-variation-settings:
+        "wdth" 100;
+    
+}
+
+h1 {
+    font-family: "Roboto", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
+    color: aliceblue;
+}
+
+h2 {
+    font-family: "Roboto", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
+    color: aliceblue;
+}
+
+h3 {
+    font-family: "Roboto", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
+    color: aliceblue;
+}
+
+h4 {
+    font-family: "Roboto", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
+    color: aliceblue;
+}
+
+h5 {
+    font-family: "Roboto", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
+    color: aliceblue;
+}
+
+h6 {
+    font-family: "Roboto", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
+    color: aliceblue;
+}
+p {
+    font-family: "Roboto", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
+    color: aliceblue;
+}
+body {
+    background-color: black;
+}
+.page-header {
+    color: yellow;
+}
+
+.aboutpage {
+    color: blue;
+}
+
+.container-main-website {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  margin: 0px 0px 100px 0px;
+}
+
+.container-main-website-inner {
+  max-width: 1500px;
+  min-width: 0px;
+}
+
+.container-main-website-cover, .container-main-website-cover-inner{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 500px;
+  position: relative;
+  z-index: -1;
+}
+.container-main-website-cover-inner img , .TPNSImain img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(245, 246, 252, 0.40), rgba(0, 0, 0, 0.80));
+}
+
+.font-cover {
+  position: absolute;
+  top: 300px;
+  left: 50px;
+  width: 90%;
+  height: auto;
+  padding: 0px 0px 0px 20px;
+}
+.font-cover h1 {
+  border-left: 10px solid yellow;
+  padding: 0px 0px 0px 10px;
+}
+.font-cover p {
+  color: yellow;
+}
+.Top-stories-main-section {
+  margin-top: 100px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+
+}
+.Top-stories-main-section-inner {
+  display: grid;
+  grid-template-columns: 1fr 20%;
+
+}
+.Newspad .Top-stories-main-section-inner {
+  display: grid;
+  grid-template-columns: 1fr 35%;
+  width: 100%;
+}
+.Top-stories-main-section-inner-left-inner {
+  display: flex;
+  flex-direction: row;
+  margin-right: 20px;
+  background-color: rgb(16, 16, 16);
+  max-height: 800px;
+}
+.Newspad .Top-stories-main-section-inner-left-inner {
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+  background-color: rgb(16, 16, 16);
+  height: auto;
+}
+.Newspad .Top-stories-main-section-inner-left-inner hr{
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid rgba(245, 246, 252, 0.40);
+  width: 100%;
+}
+.Top-stories-main-section-inner-left-inner img{
+  width: 380px;
+  height: 380px;
+  object-fit: cover;
+  padding: 10px;
+
+}
+.Newspad .Top-stories-main-section-inner-left-inner img{
+  width: 98%;
+  height: 100%;
+  object-fit: cover;
+  padding: 10px;
+
+}
+.Top-stories-main-section-inner-left-inner div {
+  max-width: 680px;
+  height: 380px;
+  padding: 10px;
+
+}
+.Newspad .Top-stories-main-section-inner-left-inner div {
+  max-width: 100%;
+  height: 380px;
+  padding: 10px;
+
+}
+.Top-stories-main-section-inner-left-inner div p{
+  color: white;
+  max-height: 270px;
+  overflow: hidden;
+
+}
+.Newspad .Top-stories-main-section-inner-left-inner div p{
+  color: white;
+
+}
+.Newspad .Top-stories-main-section-inner-right hr{
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid rgba(245, 246, 252, 0.40);
+  width: 100%;
+}
+.Top-stories-main-section-inner-right-inner img {
+  width: auto;
+  height: 200px;
+  object-fit: cover;
+}
+.Newspad .Top-stories-main-section-inner-right-inner img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
+.Top-stories-main-section-inner-right-inner {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(6, 6, 6);
+  max-height: 400px;
+  padding: 20px;
+  margin: 0px 0px 22px 0px;
+}
+.Newspad .Top-stories-main-section-inner-right-inner {
+  display: flex;
+  flex-direction: row;
+  background-color: rgb(6, 6, 6);
+  max-height: 400px;
+  padding: 10px;
+  margin: 20px 0px;
+}
+.Top-stories-main-section-inner-right-inner div {
+  width: auto;
+}
+.Top-stories-main-section-inner-right-inner div h1 {
+  font-size: 24px;
+}
+.Top-stories-main-section-inner-right-inner div p {
+  font-size: 14px;
+}
+.text h1,.Top-stories-main-section-inner-right-inner div h1 {
+  border-left: 10px solid yellow;
+  padding: 0px 0px 0px 10px;
+}
+.Newspad .text h1,.Newspad .Top-stories-main-section-inner-right-inner div h1 {
+  padding: 0px;
+  border: none;
+}
+.Newspad .Top-stories-main-section-inner-right-inner div {
+  padding: 0px 10px;
+}
+.Tsmpsectioninner {
+  width: 50%;
+  background-color: rgb(16, 16, 16);
+  padding: 10px;
+}
+.Tsmpsectioninner hr, .TPNsection hr {
+  border: 1px solid white;
+  width: 100%;
+}
+.Tsmpsectiontabs {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 20px 10px;
+  margin-top: 10px;
+  border-top: 1px solid rgba(245, 246, 252, 0.40);
+
+}
+.Tsmpsectiontabs img{
+ width: 120px; 
+ height: 120px; 
+}
+.Tsmpsectiontabs img, .Tsmpsectiontabs h1, .Tsmpsectiontabs p {
+  display: inline-block;
+ }
+.Tsmpsectiontabs h1 {
+  color: yellow;
+  font-size: 28px;
+  padding: 0px 10px;
+  margin: 0px;
+}
+.Tsmpsectiontabs p {
+  padding: 0px 10px;
+}
+
+.Tsmpsectiontabs:hover {
+  background-color: rgb(41, 41, 41);
+  cursor: pointer;
+}
+.TPNSImain {
+  width: 70%;
+}
+.TPNSsub {
+  width: 30%;
+}

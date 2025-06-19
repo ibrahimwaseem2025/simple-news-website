@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}{% endblock %}</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/header.css' %}">
+        <link rel="stylesheet" href="{% static 'css/media.css' %}">
+        <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+          <div class="header-container">
+            <div class="header-main-container">
+              <div class="header-container-sub">
+                <div class="sidebartitle">
+                  <img src="{% static 'img/icons/main-menu.png' %}" alt="logo" class="logo">
+                  <h1>BuzzWire</h1>
+                </div>
+                <div class="mainsubtitles flexdivpro">
+                  <h5 class="flexdivpro">Home</h5>
+                  <h5 class="flexdivpro">Sport</h5>
+                  <h5 class="flexdivpro">Business</h5>
+                  <h5 class="flexdivpro">Innovation</h5>
+                  <h5 class="flexdivpro">Culture</h5>
+                  <h5 class="flexdivpro">Arts</h5>
+                  <h5 class="flexdivpro">Travel</h5>
+                  <h5 class="flexdivpro">Earth</h5>
+                </div>
+                <div class="useractionheader flexdivpro">
+                  <img src="{% static 'img/icons/icons8-account-48.png' %}" alt="user" style="width: 20px; height: 20px;">
+                  <img src="{% static 'img/icons/—Pngtree—search icon_4490393.png' %}" alt="search" style="width: 30px; height: 30px;">
+                </div>
+              </div>
+            </div>
+            <div class="mainsubtitlesinner flexdivpro">
+              <h5 class="flexdivpro">Home</h5>
+              <h5 class="flexdivpro">Sport</h5>
+              <h5 class="flexdivpro">Business</h5>
+              <h5 class="flexdivpro">Innovation</h5>
+              <h5 class="flexdivpro">Culture</h5>
+              <h5 class="flexdivpro">Arts</h5>
+              <h5 class="flexdivpro">Travel</h5>
+              <h5 class="flexdivpro">Earth</h5>
+            </div>
+          </div>
+        </header>
+        <body>
+          {% block content %}
+          {% endblock %}
+        </body>
+        <footer>
+          <div class="footer-container">
+            <div class="footer-main-container">
+              <div class="footer-first-container">
+                <div class="footer-title">
+                  <h3>BuzzWire</h3>
+                </div>
+                <div class="footer-subtitles">
+                  <h5>Home</h5>
+                  <h5>Sport</h5>
+                  <h5>Business</h5>
+                  <h5>Innovation</h5>
+                  <h5>Culture</h5>
+                  <h5>Arts</h5>
+                  <h5>Travel</h5>
+                  <h5>Earth</h5>
+                </div>
+                <div class="footer-language">
+                  <div class="language-button">
+                    <p>BuzzWire in other languages</p>
+                    <img src="{% static 'img/icons/icons8-down-arrow-64.png' %}" alt="down arrow" style="width: 30px; height: 30px;">
+                  </div>
+                </div>
+              </div>
+              <div class="footer-second-container">
+                <div>
+                  <h3>Follow Waseem projects on:</h3>
+                </div>
+                <div class="foot-icon-main">
+                  <div class="foot-icon">
+                    <img src="{% static 'img/icons/icons8-x-50.png' %}" alt="X app">
+                  </div>
+                  <div class="foot-icon">
+                    <img src="{% static 'img/icons/icons8-facebook-logo-50.png' %}" alt="facebook">
+                  </div>
+                  <div class="foot-icon">
+                    <img src="{% static 'img/icons/icons8-instagram-50.png' %}" alt="Instagram">
+                  </div>
+                  <div class="foot-icon">
+                    <img src="{% static 'img/icons/icons8-tiktok-50.png' %}" alt="tiktok">
+                  </div>
+                  <div class="foot-icon">
+                    <img src="{% static 'img/icons/icons8-linkedin-50.png' %}" alt="linkedln">
+                  </div>
+                  <div class="foot-icon">
+                    <img src="{% static 'img/icons/icons8-youtube-squared-50.png' %}" alt="youtube">
+                  </div>
+                </div>
+                <div>
+                  <div class="footer-info-main-container">
+                    <p>Term of Use</p>
+                    <p>About this project</p>
+                    <p>Privacy Policy</p>
+                    <p>Cookies</p>
+                    <p>Accessibility Help</p>
+                    <p>Contact us</p>
+                    <p>Advertise</p>
+                    <p>Do not copy my project</p>
+                    <p>Contact support</p>
+                  </div>
+                  <hr>
+                  <div class="footer-info">
+                    <p>Get Personalised Newsletters</p>
+                    <p>AdChoices / Do Not Sell My Info</p>
+                    <p>© 2021 Waseem projects. The Free Speech is not responsible for the content of external sites. Read about our approach to external linking.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>
+    </body>
+</html>
