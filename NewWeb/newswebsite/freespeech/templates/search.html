@@ -1,0 +1,90 @@
+{% extends 'background.html' %}
+{% load static%}
+{% load custom_tags %}
+{% csrf_token %}
+{% load embed_video_tags %}
+{% block title %}{{search}}{% endblock %}
+{% block content %}
+{% csrf_token %}
+
+<section class="py-5 bg-light">
+  <div class="container">
+    {% if search %}
+    <h2 class="mb-4">Search Results for "{{search}}"</h2>
+    {% else %}
+    <h2 class="mb-4">Search News</h2>
+    {% endif %}
+    {% if not search %}
+    <p class="text-danger">No results found for your search query.</p>
+    {% endif %}
+    {% if search %}
+    <p class="text-success">Found {{count}} results for "{{search}}".</p>
+    {% endif %}
+    <div class="row g-4">
+      {% for news in news %}
+      <!-- News Card Start -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+          {% if news.video %}
+          {% video news.video '100% x 100%' %}
+          {% else %}
+          <img src="{{ news.image.url }}" alt="{{news.title}}" class="card-img-top" alt="{{news.title}}">     
+          {% endif %} 
+          <div class="card-body">
+            <h5 class="card-title">{{news.title}}</h5>
+            <p class="card-text">{{news.detail|truncatechars:255}}...</p>
+            <a href="{% url 'singlearticle' slug=news.slug %}" class="btn btn-primary btn-sm">Read More</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+    <!-- Add more result cards here -->
+
+
+<!-- Pagination -->
+{% if page_obj.has_other_pages %}
+<nav class="mt-5">
+  <ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+      </li>
+    {% endif %}
+
+    {% if page_obj.number > 3 %}
+      <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+      {% if page_obj.number > 4 %}
+        <li class="page-item disabled"><span class="page-link">...</span></li>
+      {% endif %}
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+      {% if num >= page_obj.number|add:"-2" and num <= page_obj.number|add:"2" %}
+        <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+          <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+        </li>
+      {% endif %}
+    {% endfor %}
+
+    {% if page_obj.number < page_obj.paginator.num_pages|add:"-2" %}
+      {% if page_obj.number < page_obj.paginator.num_pages|add:"-3" %}
+        <li class="page-item disabled"><span class="page-link">...</span></li>
+      {% endif %}
+      <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a></li>
+    {% endif %}
+
+    {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+      </li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}
+
+
+{% endblock content %}

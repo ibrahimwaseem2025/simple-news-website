@@ -1,0 +1,140 @@
+{% extends 'background.html' %}
+{% load static%}
+{% load embed_video_tags %}
+{% block title %}{{category.title}}{% endblock %}
+{% block content %}
+{% csrf_token %}
+<!--
+<div class="container-main-website">
+
+    <div>
+      <div>
+        <h1>
+          Latest Stories          
+        </h1>
+
+      </div>
+      <div class="related_news-section">
+        <div class="row">
+          {% for news in all_news|slice:"0:4" %}
+          <div class="tab">
+            <div class="image">
+              {% if news.video %}
+              {% video news.video '100% x 100%' %}
+              {% else %}
+              <img src="/img/{{news.image}}" alt="{{news.title}}" style="width: 100%; height: 100%;">     
+              {% endif %}           
+            </div>
+            <div>
+              <h1>{{news.title}}</h1>
+              <p>{{news.detail|truncatechars:255}}<a href="/singlearticle/{{news.id}}" class="btn btn-sm btn-primary" style="color: yellow;">Read Full</a></p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="row">
+          {% for news in all_news|slice:"4:8" %}
+          <div class="tab">
+            <div class="image">
+              {% if news.video %}
+              {% video news.video '100% x 100%' %}
+              {% else %}
+              <img src="/img/{{news.image}}" alt="{{news.title}}" style="width: 100%; height: 100%;">     
+              {% endif %}                
+            </div>
+            <div>
+              <h1>{{news.title}}</h1>
+              <p>{{news.detail|truncatechars:255}}<a href="/singlearticle/{{news.id}}" class="btn btn-sm btn-primary" style="color: yellow;">Read Full</a></p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+-->
+
+  <header class="bg-light py-5 text-center">
+    <div class="container">
+      <a href="/category/{{category.id}}" 
+      class="float-right btn btn-sm btn-dark btn btn-sm btn-primary" >
+      <h1 class="display-5">Category: {{category.title}}</h1> </a>
+      <p class="text-muted">Posts filed under the "{{category.title}}" category</p>
+    </div>
+  </header>
+  <!-- Posts in Category -->
+  <main class="container py-5">
+    <div class="row">
+      <!-- Blog Posts List -->
+      <div class="col-md-8">
+        {% for news in news %}
+        <!-- Blog Post Card 1 -->
+        <div class="card mb-4">
+          <img src="{{ news.image.url }}" class="card-img-top" alt="{{news.title}}">
+          <div class="card-body">
+            <a href="{% url 'singlearticle' slug=news.slug %}"class="btn btn-sm btn-primary">
+            <h3 class="card-title">{{news.title}}</h3></a>
+            <p class="card-text">{{news.detail|slice:"1000"}}....</p>
+            <a href="{% url 'singlearticle' slug=news.slug %}" class="btn btn-primary">Read More</a>
+          </div>
+          <div class="card-footer text-muted">
+            Posted on June 15, 2025 by {{news.author}}
+          </div>
+        </div>
+        {% endfor %}
+        <!-- Pagination -->
+        <nav aria-label="Pagination">
+          <ul class="pagination justify-content-center">
+            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-md-4">
+        <div class="mb-4">
+          <h5>Other Categories</h5>
+          <ul class="list-group">
+            <li class="list-group-item"><a href="category.html">Travel</a></li>
+            <li class="list-group-item"><a href="category.html">Lifestyle</a></li>
+            <li class="list-group-item"><a href="category.html">Tutorials</a></li>
+          </ul>
+        </div>
+    <div class="related_news-section">
+      <div class="row">
+        {% for news in all_news|slice:"0:8" %}
+        {% if news.category.id == category.id %}
+        <div class="tab">
+          <div class="image">
+            {% if news.video %}
+            {% video news.video '100% x 100%' %}
+            {% else %}
+            <img src="{{ news.image.url }}" alt="{{news.title}}" style="width: 100%; height: 100%;">     
+            {% endif %}           
+          </div>
+          <div>
+            <h1>{{news.title}}</h1>
+            <p>{{news.detail|truncatechars:255}}<a href="{% url 'singlearticle' slug=news.slug %}" class="btn btn-sm btn-primary" style="color: yellow;">Read Full</a></p>
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+        <div class="mb-4">
+          <h5>Related posts</h5>
+          <ul class="list-unstyled">
+            {% for news in news %}
+            <li><a href="{% url 'singlearticle' slug=news.slug %}" class="btn btn-sm btn-primary">{{news.title}}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+{% endblock content %}

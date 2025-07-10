@@ -1,0 +1,73 @@
+{% extends 'background.html' %}
+{% load static%}
+{% load embed_video_tags %}
+{% block title %}Register page{% endblock %}
+{% block content %}
+{% csrf_token %}
+
+<style>
+  body {
+    background-color: #f8f9fa;
+  }
+  .login-container {
+    max-width: 550px;
+    margin: 80px auto;
+  }
+</style>
+<div class="container-main-website">
+  <!-- Login Form -->
+  <div class="container login-container">
+    <div class="card shadow">
+      <div class="card-body">
+        <h3 class="card-title text-center mb-4 mt-4">register new Account</h3>
+        <form method="post" id="contactForm" novalidate="novalidate">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <!--
+          <div class="mb-3">
+            <label for="firstname" class="form-label">First name</label>
+            <input class="form-control" id="firstname" type="text" name="first_name", placeholder ="first name" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="lastname" class="form-label">Last name</label>
+            <input class="form-control" id="lastname" type="text" name="last_name", placeholder ="last name" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="username" class="form-label">username</label>
+            <input class="form-control" id="lastname" type="text" name="username", placeholder ="username" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="email" class="form-label">E-mail</label>
+            <input class="form-control" id="email" type="email" name="email", placeholder ="email" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="password1" class="form-label">password1</label>
+            <input class="form-control" id="password1" type="password" name="password1", placeholder ="password1" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="password2" class="form-label">Password2</label>
+            <input class="form-control" id="password2" type="password" name="password2", placeholder ="confirm password" required>
+          </div>
+
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="rememberMe">
+            <label class="form-check-label" for="rememberMe">Remember me</label>
+          </div>
+          -->
+          <button type="submit" class="lcmi-submit btn btn-primary w-100 mb-3 mt-3">Register now</button>
+        </form>
+        <a href="{% url 'user_login' %}">
+          <button class="lcmi-submit btn btn-secondary w-100">
+            Login
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,206 @@
+{% extends 'background.html' %}
+{% load static %}
+{% load custom_tags %}
+{% load embed_video_tags %}
+{% block title %}{{news.title}}{% endblock %}
+{% block content %}
+{% csrf_token %}
+<!-- Blog Post Content -->
+<main class="container py-8 mt-5 mb-5">
+  <div class="row mt-5">
+    <!-- Main Article -->
+    <div class="col-lg-8 mb-5">
+      <div class="d-flex mb-4 flex-row-reverse">
+        <a class="text-white btn btn-dark" href="{% url 'singlearticle' slug=news.slug %}" style="max-height: 50px;">
+          <div class="d-flex align-items-center justify-content-center">
+            <p style="margin: 0px 5px 0px 0px">Share</p>
+            <img src="{% static 'img/icons/icons8-share-50.png' %}" alt="Share" class="img-fluid" style="max-width: 20px; max-height: 20px;">
+          </div>
+        </a>
+        <a href="{% url 'savearticle' news.id %}" class="text-white btn btn-dark" style="max-height: 50px; margin-right: 10px;">
+          <div class="d-flex align-items-center justify-content-center">
+            <p style="margin: 0px 5px 0px 0px">Save</p>
+            <img src="{% static 'img/icons/icons8-favourite-48.png' %}" alt="Save" class="img-fluid" style="max-width: 20px; max-height: 20px;"> 
+          </div>
+        </a>
+      </div>
+      <article>
+        <h1 class="mb-3">{{news.title}}</h1>
+        <p class="text-muted">Posted on {{news.add_time}} by <strong>{{news.author}}</strong> Reporting from <img src="{% static 'img/icons/icons8-location-50.png' %}" alt="Location" style="width: 10px; height: 10px;">{{news.location}}</p>
+        <p class="text-muted">{{ hours_ago }}</p>
+
+        {% if news.video %}
+        <div class="img-fluid mb-4" alt="{{news.image_description}}" style="height: 400px; width: 100%;">
+          {% video news.video '100% x 100%' %}
+        </div>
+        {% else %}
+        <div>
+          <img src="{{ news.image.url }}" alt="{{news.image_description}}" class="img-fluid mb-4" alt="{{news.image_description}}" style="height: 400px; width: 100%;">
+          <p>{{ news.image_description }}</p>
+        </div>
+        {% endif %}
+        <div class="container py-3">
+          <div class="ck-content">
+            {{ news.detail_rich }}
+          </div>
+          <div class="ck-content">
+            {{ news.detail }}
+          </div>
+          <div class="ck-content">
+            {{ news.detail_rich_ckeditor|safe }}
+          </div>
+        </div>
+        <blockquote class="blockquote my-4 p-3 bg-light border-start border-primary">
+          <p>"This is a highlighted quote from the post to grab attention or summarize an idea."</p>
+        </blockquote>
+        <p>More content continues here. You can add images, code snippets, or anything that fits your post...</p>
+
+        <!-- Tags -->
+        <div class="mt-4">
+          <span class="badge bg-primary">{{news.category.title}}</span>
+          <span class="badge bg-secondary">Tutorial</span>
+          <span class="badge bg-success">Web Development</span>
+        </div>
+      </article>
+
+      <div>
+        <div>
+          <h1>After reading this article</h1>
+
+        </div>
+        <div class="single-comment">
+          <form>
+            <div style="display: flex; flex-direction: row;" class="reactions" id="reactions"  data-article-id="{{ news.id }}" data-csrf-token="{{ csrf_token }}">
+              <input type="hidden" name="reaction" id="reaction-type">
+              <div class="comment-section express" onclick="sendReaction('haha')">
+                <img src="{% static 'img/icons/icons8-laughing-face-50.png' %}" alt="haha" class="reaction">
+                <p style="text-align: center; font-size: 60px;">🤣</p>
+                <p style="text-align: center; margin: 0px;">{{ reaction_counts.haha }}</p>
+              </div>
+              <div class="comment-section express" onclick="sendReaction('happy')">
+                <img src="{% static 'img/icons/icons8-happy-face-50.png' %}" alt="happy" class="reaction">
+                <p style="text-align: center; font-size: 60px;">😊</p>
+                <p style="text-align: center; margin: 0px;">{{ reaction_counts.happy }}</p>
+              </div>
+              <div class="comment-section express" onclick="sendReaction('sad')">
+                <img src="{% static 'img/icons/icons8-sad-face-50.png' %}" alt="sad" class="reaction">
+                <p style="text-align: center; font-size: 60px;">😭</p>
+                <p style="text-align: center; margin: 0px;">{{ reaction_counts.sad }}</p>
+              </div>
+              <div class="comment-section express" onclick="sendReaction('angry')">
+                <img src="{% static 'img/icons/icons8-angry-face-meme-50.png' %}" alt="angry" class="reaction">
+                <p style="text-align: center; font-size: 60px;">😡</p>
+                <p style="text-align: center; margin: 0px;">{{ reaction_counts.angry }}</p>
+              </div>
+            </div>
+          </form>
+        </div>
+        
+      </div>      
+
+      <!-- Comments Section -->
+      <section class="mt-5 mb-5">
+        <h4>Comments</h4>
+        <div id="comment-section">
+          {% include 'comment.html' %}
+        </div>
+  <!--this is where we unfold comment html which includes all comments array-->
+        {% if comments|length >= 3 %} <!-- if comments are greater than 3 -->
+        <div class="text-center">
+          <div id="toggle-btn" data-showing-all="{{ show_all|yesno:'true,false' }}" class="text-white btn btn-dark">
+            {% if show_all %}Show Less{% else %}Show All Comments{% endif %} <!--this is to change text. if show all is true, it will show as show less. else show all comments-->
+          </div>
+        </div>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+        <form method="post" action="{% url 'singlearticle' slug=news.slug %}">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="comment" class="form-label">Leave a comment</label>
+            <textarea class="form-control" id="comment" name="message" rows="3" placeholder="Write your comment here..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit Comment</button>
+        </form>
+        {% else %}
+        <form method="post" action="{% url 'singlearticle' slug=news.slug %}">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="name" class="form-label">Name or username</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Name or username" required>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+          </div>
+          <div class="mb-3">
+            <label for="comment" class="form-label">Leave a comment</label>
+            <textarea class="form-control" id="comment" name="message" rows="3" placeholder="Write your comment here..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit Comment</button>
+          </div>
+        </form>
+        {% endif %}
+      </section>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col-lg-4">
+      <div class="mb-4">
+        <h5>Categories</h5>
+        <ul class="list-group">
+          {% for category in three_categories %}
+            <li class="list-group-item"><a href="{% url 'category' category.id %}" class="text-decoration-none text-dark">{{ category.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      {% if news.location == "unknown" or news.location == "none" or news.location == "None" %}
+      <div class="mb-4">
+        <h5>more about this title</h5>
+        <ul>
+          {% for news in similar %}
+          <li class="mb-2"><a href="{% url 'singlearticle' slug=news.slug %}">{{news.title}}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% else %}
+      <div class="mb-4">
+        <h5>more about {{news.location}}</h5>
+
+        <ul>
+          {% for news in location %}
+          <li class="mb-2"><a href="{% url 'singlearticle' slug=news.slug %}" class="text-decoration-none text-dark">{{news.title}}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      <div class="mb-4">
+        <h5>Related posts</h5>
+        <ul>
+          {% for news in related_news %}
+          <li class="mb-2"><a href="{% url 'singlearticle' slug=news.slug %}"  class="text-decoration-none text-dark">{{news.title}}</a></li>
+          {% endfor %}
+          <li><a href="post.html">Getting Started with Bootstrap 5</a></li>
+          <li><a href="post.html">Why Blogging is Still Relevant</a></li>
+          <li><a href="post.html">How to Host Your Blog</a></li>
+        </ul>
+      </div>
+      <div class="mb-4">
+        <h5>key titles</h5>
+        <ul>
+          {% for news in connect_news %}
+          <li class="mb-2"><a href="{% url 'singlearticle' slug=news.slug %}"  class="text-decoration-none text-dark">{{news.title}}</a></li>
+          {% endfor %}
+          <li><a href="post.html">Getting Started with Bootstrap 5</a></li>
+          <li><a href="post.html">Why Blogging is Still Relevant</a></li>
+          <li><a href="post.html">How to Host Your Blog</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</main>
+
+
+{% endblock content %}

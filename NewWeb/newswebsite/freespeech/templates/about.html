@@ -1,0 +1,48 @@
+{% extends 'background.html' %}
+{% load static%}
+{% load embed_video_tags %}
+{% block title %}Contact me{% endblock %}
+{% block content %}
+{% csrf_token %}
+
+  <!-- About Header -->
+  <header class="bg-light py-5 text-center">
+    <div class="container">
+      <h1 class="display-5">About Me</h1>
+      <p class="lead text-muted">Learn more about the author and this blog</p>
+    </div>
+  </header>
+
+  <!-- About Content -->
+  <main class="container py-5">
+    <div class="row align-items-center">
+      <!-- Profile Image -->
+      <div class="col-md-4 text-center mb-4">
+        <img src="https://via.placeholder.com/250" class="rounded-circle img-fluid shadow" alt="Author">
+      </div>
+      <!-- Profile Text -->
+      <div class="col-md-8">
+        <h2>Hello! I'm Ibrahim Waseem, the writer and builder of this blog site</h2>
+        <p>
+          I'm passionate about technology, writing, and sharing what I learn. This blog is where I post tutorials, opinions, and projects related to web development, programming, and life as a creator.
+        </p>
+        <p>
+          My mission is to make complex topics easy to understand and help others grow their skills, whether you're a beginner or an experienced developer.
+        </p>
+        <p>
+          When I’m not coding or writing, I enjoy reading, traveling, and learning about new tools and technologies.
+        </p>
+      </div>
+    </div>
+
+    <!-- Mission Section -->
+    <div class="mt-5">
+      <h3>Why I Started building websites</h3>
+      <p>
+        I created this blog as a place to document my journey, learn how to code to help others, and build a community around curiosity and improvement. Whether you're here to learn something new or just browsing, thank you for being part of the journey!
+      </p>
+    </div>
+  </main>
+
+{% endblock content %}
+

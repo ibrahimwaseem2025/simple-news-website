@@ -1,0 +1,121 @@
+{% extends 'background.html' %}
+{% load static%}
+{% load embed_video_tags %}
+{% block title %}Saved Articles{% endblock %}
+{% block content %}
+{% csrf_token %}
+<section class="py-5 bg-light">
+  <div class="container">
+    <h2 class="mb-4">Saved Articles</h2>
+    <h3>Saved Articles: {{ total }}</h3>
+    <div class="row g-4">
+      {% if saved_articles %}
+      <div class="row g-4">
+
+        {% for news in page_obje %}
+        <!-- News Card Start -->
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100 shadow-sm">
+            {% if news.video %}
+            {% video news.video '100% x 100%' %}
+            {% else %}
+            <img src="{{ news.image.url }}" alt="{{news.title}}" class="card-img-top" alt="{{news.title}}">     
+            {% endif %} 
+            <div class="card-body">
+              <h5 class="card-title">{{news.title}}</h5>
+              <p class="card-text">{{news.detail|truncatechars:255}}...</p>
+              <a href="{% url 'singlearticle' slug=news.slug %}" class="btn btn-primary btn-sm">Read More</a>
+            </div>
+            <form method="post" action="{% url 'removearticle' item.article.id %}">
+              {% csrf_token %}
+              <button type="submit">Remove</button>
+            </form>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <p>No saved articles found.</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+    <!-- Add more result cards here -->
+
+
+<!-- Pagination -->
+{% if page_obj.has_other_pages %}
+<nav class="mt-5">
+  <ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+      </li>
+    {% endif %}
+
+    {% if page_obj.number > 3 %}
+      <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+      {% if page_obj.number > 4 %}
+        <li class="page-item disabled"><span class="page-link">...</span></li>
+      {% endif %}
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+      {% if num >= page_obj.number|add:"-2" and num <= page_obj.number|add:"2" %}
+        <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+          <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+        </li>
+      {% endif %}
+    {% endfor %}
+
+    {% if page_obj.number < page_obj.paginator.num_pages|add:"-2" %}
+      {% if page_obj.number < page_obj.paginator.num_pages|add:"-3" %}
+        <li class="page-item disabled"><span class="page-link">...</span></li>
+      {% endif %}
+      <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a></li>
+    {% endif %}
+
+    {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+      </li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}
+
+<div class="container-main-website">
+  <div class="container-main-website-inner">
+    <div>
+      <div>
+        <h1>Saved articles</h1>
+      </div>
+      <div>
+        <h1>Total saved: {{ total }}</h1>
+        {% if saved_articles %}
+        <div class="savearticles-main-section">
+          {% for item in saved_articles %}
+          <div class="Top-stories-main-section-inner-right-inner">
+            <div>
+              <h1>{{ item.article.title }}</h1>
+              <p style="max-height: 500px;">{{item.article.detail |slice:"80"}}....</p>
+              <p style="color: yellow;"><a href="{% url 'singlearticle' slug=item.article.slug %}">Read Full</a></p>
+            </div>
+            <form method="post" action="{% url 'removearticle' item.article.id %}">
+              {% csrf_token %}
+              <button type="submit">Remove</button>
+            </form>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="footer-subtitles" style="display: flex; justify-content: center; align-items: center;">
+          <h5 style="width: auto;">no articles saved yet</h5>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,33 @@
+{% load static%}
+{% load custom_tags %}
+{% load embed_video_tags %}
+{% for comment in comments %}
+<div  id="comment-{{comment.id}}" class="comment col comment-section">
+  <div class="d-flex col mb-4">
+    <div class="col-lg-8">
+      <div class="mb-3">
+        <strong>{{comment.email}}, {{comment.name}}</strong>
+        <strong>{{comment.add_time}}</strong>
+        <p>{{comment.comment}}</p>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="d-flex mb-4 flex-row-reverse reactions" id="react" data-comment-id="{{ comment.id }}" data-csrf ="{{ csrf_token }}">
+        <a class="text-dark btn reaction row d-flex align-items-center justify-content-center" onclick="sendCommentReaction({{ comment.id }}, 'like')">
+          <div class="d-flex align-items-center justify-content-center">
+            <p style="margin: 0px 5px 0px 0px">👍</p>
+            <p>{{ comment_reaction_counts|get_item:comment.id|get_item:"like"|default:0 }}</p>
+          </div>
+        </a>
+        <a class="text-dark btn reaction row d-flex align-items-center justify-content-center" onclick="sendCommentReaction({{ comment.id }}, 'dislike')">
+          <div class="d-flex align-items-center justify-content-center">
+            <p style="margin: 0px 5px 0px 0px">👎</p>
+            <p>({{ comment_reaction_counts|get_item:comment.id|get_item:"dislike"|default:0 }})</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+{% endfor %}

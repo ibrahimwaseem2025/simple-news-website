@@ -1,0 +1,112 @@
+.bento-item {
+    height: 200px;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.bento-item:hover {
+    transform: scale(1.05);
+}
+
+.bento-tall {
+    height: 410px;
+}
+
+.bento-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+}
+
+.bento-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.pagination .disabled .page-link {
+    pointer-events: none;
+}
+.ck-content {
+  font-family: "Helvetica", sans-serif;
+  font-size: 1rem;
+  color: #212529;
+  line-height: 1.7;
+}
+
+.ck-content h1,
+.ck-content h2,
+.ck-content h3 {
+  font-weight: 600;
+  margin: 1.5rem 0 1rem;
+}
+
+.ck-content p {
+  margin-bottom: 1rem;
+}
+
+.ck-content blockquote {
+  padding: 1rem 1.5rem;
+  margin: 1rem 0;
+  background-color: #f8f9fa;
+  border-left: 5px solid #ccc;
+  font-style: italic;
+}
+
+.ck-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem auto;
+}
+
+.ck-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.ck-content table, 
+.ck-content th, 
+.ck-content td {
+  border: 1px solid #dee2e6;
+  padding: 0.75rem;
+}
+
+
+
+form input[type="text"],
+form input[type="password"]
+form input[type="email"]
+form input[type="E-mail"]
+{
+    width: 100%;
+    padding: 4px;
+    margin: 4px 0px 4px 0px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+form {
+  margin: 0px 20px;
+}
+form input {
+    width: 100%;
+    padding: 4px;
+    margin: 4px 0px 4px 0px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.errorlist {
+    color: red;
+    font-size: 0.9em;
+    list-style-type: none;
+    padding: 0;
+}

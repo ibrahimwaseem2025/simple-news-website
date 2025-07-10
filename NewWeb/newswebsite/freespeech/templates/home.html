@@ -1,0 +1,359 @@
+{% extends 'background.html' %}
+{% load static%}
+{% load embed_video_tags %}
+{% block title %}Home page{% endblock %}
+{% block content %}
+{% csrf_token %}
+<!--
+<div class="container-main-website">
+  <div class="container-main-website-inner">
+    <a href="/singlearticle/{{first_news.id}}" class="btn btn-sm btn-primary">
+      <div class="container-main-website-cover">
+          <div class="container-main-website-cover-inner">
+            <div class="gradient"></div>
+            {% if first_news.video %}
+            <div class="video-container">
+              {% video first_news.video '100% x 100%'  %}
+
+            </div>
+            {% else %}
+            <img src="/img/{{first_news.image}}" alt="{{first_news.title}}" style="width: 100%; height: 100%;">
+            {% endif %}
+            <div class="font-cover">
+              <h1>{{first_news.title}}</h1>
+              <p>{{first_news.author}}</p>         
+            </div>
+          </div>
+      </div>
+    </a>
+    <div class="Top-stories-main-section">
+      <h1 style="padding-left: 10px;">Top stories</h1>
+      <div class="Top-stories-main-section-inner">
+        <div class="Top-stories-main-section-inner-left" style="background-color: rgb(16, 16, 16);">
+          {% for news in three_news %}
+          {% if forloop.counter|divisibleby:2 %}
+            Even index (2nd, 4th, etc.): image on right 
+            <div class="Top-stories-main-section-inner-left-inner">
+              <div class="text">
+                <a href="/singlearticle/{{news.id}}" class="btn btn-sm btn-primary">
+                  <h1>{{news.title}}</h1>
+                </a>
+                <p>{{ news.detail|striptags|slice:"500" }}....</p>
+              </div>
+              {% if news.image %}              
+                <img src="/img/{{news.image}}" alt="{{news.title}}" class="image">
+            
+              {% else %}
+                <img src="{% static 'img/noimage.png' %}" alt="{{news.title}}" class="image">
+
+              {% endif %}
+            </div>
+          {% else %}
+            Odd index (1st, 3rd, etc.): image on left
+            <div class="Top-stories-main-section-inner-left-inner">
+              {% if news.image %}              
+              <img src="/img/{{news.image}}" alt="{{news.title}}" class="image">
+          
+            {% else %}
+              <img src="{% static 'img/noimage.png' %}" alt="{{news.title}}" class="image">
+
+            {% endif %}
+              
+              {% if news.video %}
+              <div class="video-container">
+                {% video news.video '100% x 100%' %}
+              </div>
+              {% else %}
+              <img src="/img/{{news.image}}" alt="{{news.title}}" class="image">
+              {% endif %}
+              <div class="text">
+                <a href="/singlearticle/{{news.id}}" class="btn btn-sm btn-primary">
+                  <h1>{{news.title}}</h1>
+                </a>
+                <p>{{ news.detail|striptags|slice:"500" }}....</p>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+        </div>
+        <div class="Top-stories-main-section-inner-right">
+          {% for forth_new in forth_news %}
+          <div class="Top-stories-main-section-inner-right-inner">
+            <img src="/img/{{forth_new.image}}" alt="{{forth_new.title}}">
+            <div>
+              <a href="/singlearticle/{{forth_new.id}}" class="btn btn-sm btn-primary">
+              <h1>{{forth_new.title |slice:"80"}}...</h1></a>
+              <p>{{forth_new.detail |striptags|slice:"80"}}</p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    -->
+    
+  <header class="bg-light text-center py-5">
+    <div class="container">
+      <h1 class="display-4">Welcome to Waseemgraphys Blog</h1>
+      <p class="lead">Sharing thoughts, tech, audio, and more.</p>
+    </div>
+  </header>
+
+  {% if podcasts %}
+  <section class="py-5 bg-light">
+    <div class="container">
+      <h2 class="mb-4">Podcast</h2>
+
+      <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        
+        <!-- Indicators -->
+        <div class="carousel-indicators">
+          {% for podcast in podcasts|slice:"0:20" %}
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active"{% endif %} aria-label="Slide {{ forloop.counter }}"></button>
+          {% endfor %}
+        </div>
+
+        <!-- Slides -->
+        <div class="carousel-inner">
+          {% for podcast in podcasts|slice:"0:20" %}
+          <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <div class="ratio ratio-16x9">
+              {% video podcast.video '100% x 100%' %}
+            </div>
+            <div class="carousel-caption d-none d-md-block bg-dark p-3">
+              <h5>{{ podcast.title }}</h5>
+              <p>{{ podcast.detail|slice:"100" }}</p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+  <section class="py-5">
+    <div class="container">
+      <h2 class="mb-4">Listen to Articles</h2>
+      <div class="row">
+        {% for v in voice|slice:"0:10" %}
+        <div class="col-md-6">
+          <div class="card p-3">
+            <h5>Audio Title</h5>
+            <audio controls>
+              <source src="{{ v.file.url }}" type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+            <div class="text">
+              <a href="{% url 'singlearticle' slug=v.slug %}" class="btn btn-sm btn-primary">
+                <h1>{{v.title}}</h1>
+              <p>{{v.detail|slice:"100"}}</p> </a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Most Viewed Section -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <h2 class="mb-4">Most Viewed</h2>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% if popnews %}
+        {% for news in popnews|slice:"0:6" %}
+        <div class="col">
+          <div class="card h-100">
+            <img src="{{ news.image.url }}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">{{ news.title }}</h5>
+              <a href="{% url 'singlearticle' slug=news.slug %}" class="btn btn-outline-primary">Read More</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Signup -->
+  <section class="py-5">
+    <div class="container">
+      <h2 class="mb-4">Subscribe to Newsletter</h2>
+      <form class="row g-3">
+        <div class="col-auto">
+          <input type="email" class="form-control" placeholder="Enter your email">
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary">Subscribe</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Featured Author -->
+  <section class="py-5 bg-light">
+    <div class="container text-center">
+      <h2 class="mb-4">Featured Author</h2>
+      <img src="https://via.placeholder.com/100" class="rounded-circle mb-3" alt="Author">
+      <h5>Ibrahim Waseem</h5>
+      <p>Passionate about writing, tech, and learning.</p>
+    </div>
+  </section>
+
+  <!-- Upcoming Events -->
+  <section class="py-5">
+    <div class="container">
+      <h2 class="mb-4">Upcoming Events</h2>
+      <ul class="list-group">
+        {% for event in upcoming %}
+        <li class="list-group-item">{{event.title}} - {{event.date}}</li>
+        {% endfor %}
+        {% if not upcoming %}
+        <li class="list-group-item">No upcoming events at the moment.</li>
+        {% endif %}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Recommended Reads -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <h2 class="mb-4">Recommended Reads</h2>
+      {% if recommend_blogs %}
+      <ul>
+        {% for blog in recommend_blogs %}
+        <li><a href="{% url 'singlearticle' slug=blog.slug %}">{{ blog.title }}</a></li>
+        {% endfor %}
+        <li><a href="https://example.com">Productivity Tips for Writers</a></li>
+      </ul>
+      {% else %}
+      <p>No recommendations available at the moment.</p>
+      {% endif %}
+    </div>
+  </section>
+  <section class="py-5 bg-light">
+    {% for category in three_categories %}
+    <div class="container my-5">
+        <h1 class="text-center mb-4"><a href="/category/{{category.id}}" class="nav-link">{{category.title}}</a></h1>
+        <div class="row g-4">
+            <!-- Large item -->
+            {% for news in category.news_set.all|slice:":1" %}
+            {% if forloop.first %}
+            <a href="{% url 'singlearticle' slug=news.slug %}">
+              <div class="col-md-8">
+                <div class="bento-item bento-tall">
+                    {% if news.video %}
+                    <div class="ratio ratio-16x9">
+                        {% video news.video '100% x 100%' %}
+                    </div>
+                    {% else %}
+                    <img src="{{ news.image.url }}" alt="{{news.title}}" class="img-fluid">
+                    {% endif %}
+                    <div class="bento-content">
+                        <h3>{{news.title}}</h3>
+                        <p>{{news.detail|striptags|slice:"100"}}...</p>
+                    </div>
+                </div>
+              </div>
+            </a>
+            {% endif %}
+            {% endfor %}
+            <!-- Two small items -->
+            <div class="col-md-4">
+                <div class="row g-4">
+                    {% for news in category.news_set.all %}
+                    {% if forloop.counter >= 2 and forloop.counter <= 3 %}
+                    <a href="{% url 'singlearticle' slug=news.slug %}">
+                      <div class="col-12">
+                        <div class="bento-item">
+                          <a href="{% url 'singlearticle' slug=news.slug %}">
+                            {% if news.video %}
+                            <div class="ratio ratio-16x9">
+                                {% video news.video '100% x 100%' %}
+                            </div>
+                            {% else %}
+                            <img src="{{ news.image.url }}" alt="{{news.title}}" class="img-fluid">
+                            {% endif %}
+                            <div class="bento-content">
+                                <h5>{{news.title}}</h5>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- Medium item -->
+            {% for news in category.news_set.all %}
+            {% if forloop.counter >= 4 and forloop.counter <= 6 %}
+            <a href="{% url 'singlearticle' slug=news.slug %}">
+              <div class="col-md-4">
+                <div class="bento-item">
+                  <a href="{% url 'singlearticle' slug=news.slug %}">
+                    {% if news.video %}
+                    <div class="ratio ratio-16x9">
+                        {% video news.video '100% x 100%' %}
+                    </div>
+                    {% else %}
+                    <img src="{{ news.image.url }}" alt="{{news.title}}" class="img-fluid">
+                    {% endif %}
+                    <a href="{% url 'singlearticle' slug=news.slug %}">
+                    <div class="bento-content">
+                        <h5>{{news.title}}</h5>
+                    </div>
+                    </a>
+                  </a>
+                </div>
+              </div>
+            </a>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+  </section>
+  <section class="py-5 bg-light">
+    {% if popnews %}
+    <div class="container">
+      <h2 class="mb-4">Trending now</h2>
+      <ul>
+        {% for pop in popnews|slice:"0:20" %}
+        <li><a href="{% url 'singlearticle' slug=pop.slug %}">{{pop.title}}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% else %}
+    <div class="container">
+      <h2 class="mb-4">Trending now</h2>
+      <ul>
+        <li><a>Trendings disclosed due to maintenance at the backend</a></li>
+      </ul>
+    </div>
+    {% endif %}
+  </section>
+  <!-- Social Feed -->
+  <section class="py-5">
+    <div class="container">
+      <h2 class="mb-4">Follow on Social Media</h2>
+      <div class="ratio ratio-16x9">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/waseemgraphy/" data-instgrm-version="12" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; padding:0; max-width: 900px; max-height: 1000px; width:100%; width:undefinedpx;height:undefinedpx;max-height:100%; width:undefinedpx;"><div style="padding:16px;"> <a id="main_link" href="https://www.instagram.com/waseemgraphy/" style=" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;" target="_blank"> <div style=" display: flex; flex-direction: row; align-items: center;"> <div style="background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 40px; margin-right: 14px; width: 40px;"></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center;"> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 100px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 60px;"></div></div></div><div style="padding: 19% 0;"></div> <div style="display:block; height:50px; margin:0 auto 12px; width:50px;"><svg width="50px" height="50px" viewBox="0 0 60 60" version="1.1" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(-511.000000, -20.000000)" fill="#000000"><g><path d="M556.869,30.41 C554.814,30.41 553.148,32.076 553.148,34.131 C553.148,36.186 554.814,37.852 556.869,37.852 C558.924,37.852 560.59,36.186 560.59,34.131 C560.59,32.076 558.924,30.41 556.869,30.41 M541,60.657 C535.114,60.657 530.342,55.887 530.342,50 C530.342,44.114 535.114,39.342 541,39.342 C546.887,39.342 551.658,44.114 551.658,50 C551.658,55.887 546.887,60.657 541,60.657 M541,33.886 C532.1,33.886 524.886,41.1 524.886,50 C524.886,58.899 532.1,66.113 541,66.113 C549.9,66.113 557.115,58.899 557.115,50 C557.115,41.1 549.9,33.886 541,33.886 M565.378,62.101 C565.244,65.022 564.756,66.606 564.346,67.663 C563.803,69.06 563.154,70.057 562.106,71.106 C561.058,72.155 560.06,72.803 558.662,73.347 C557.607,73.757 556.021,74.244 553.102,74.378 C549.944,74.521 548.997,74.552 541,74.552 C533.003,74.552 532.056,74.521 528.898,74.378 C525.979,74.244 524.393,73.757 523.338,73.347 C521.94,72.803 520.942,72.155 519.894,71.106 C518.846,70.057 518.197,69.06 517.654,67.663 C517.244,66.606 516.755,65.022 516.623,62.101 C516.479,58.943 516.448,57.996 516.448,50 C516.448,42.003 516.479,41.056 516.623,37.899 C516.755,34.978 517.244,33.391 517.654,32.338 C518.197,30.938 518.846,29.942 519.894,28.894 C520.942,27.846 521.94,27.196 523.338,26.654 C524.393,26.244 525.979,25.756 528.898,25.623 C532.057,25.479 533.004,25.448 541,25.448 C548.997,25.448 549.943,25.479 553.102,25.623 C556.021,25.756 557.607,26.244 558.662,26.654 C560.06,27.196 561.058,27.846 562.106,28.894 C563.154,29.942 563.803,30.938 564.346,32.338 C564.756,33.391 565.244,34.978 565.378,37.899 C565.522,41.056 565.552,42.003 565.552,50 C565.552,57.996 565.522,58.943 565.378,62.101 M570.82,37.631 C570.674,34.438 570.167,32.258 569.425,30.349 C568.659,28.377 567.633,26.702 565.965,25.035 C564.297,23.368 562.623,22.342 560.652,21.575 C558.743,20.834 556.562,20.326 553.369,20.18 C550.169,20.033 549.148,20 541,20 C532.853,20 531.831,20.033 528.631,20.18 C525.438,20.326 523.257,20.834 521.349,21.575 C519.376,22.342 517.703,23.368 516.035,25.035 C514.368,26.702 513.342,28.377 512.574,30.349 C511.834,32.258 511.326,34.438 511.181,37.631 C511.035,40.831 511,41.851 511,50 C511,58.147 511.035,59.17 511.181,62.369 C511.326,65.562 511.834,67.743 512.574,69.651 C513.342,71.625 514.368,73.296 516.035,74.965 C517.703,76.634 519.376,77.658 521.349,78.425 C523.257,79.167 525.438,79.673 528.631,79.82 C531.831,79.965 532.853,80.001 541,80.001 C549.148,80.001 550.169,79.965 553.369,79.82 C556.562,79.673 558.743,79.167 560.652,78.425 C562.623,77.658 564.297,76.634 565.965,74.965 C567.633,73.296 568.659,71.625 569.425,69.651 C570.167,67.743 570.674,65.562 570.82,62.369 C570.966,59.17 571,58.147 571,50 C571,41.851 570.966,40.831 570.82,37.631"></path></g></g></g></svg></div><div style="padding-top: 8px;"> <div style=" color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:550; line-height:18px;"> View this post on Instagram</div></div><div style="padding: 12.5% 0;"></div> <div style="display: flex; flex-direction: row; margin-bottom: 14px; align-items: center;"><div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(0px) translateY(7px);"></div> <div style="background-color: #F4F4F4; height: 12.5px; transform: rotate(-45deg) translateX(3px) translateY(1px); width: 12.5px; flex-grow: 0; margin-right: 14px; margin-left: 2px;"></div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(9px) translateY(-18px);"></div></div><div style="margin-left: 8px;"> <div style=" background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 20px; width: 20px;"></div> <div style=" width: 0; height: 0; border-top: 2px solid transparent; border-left: 6px solid #f4f4f4; border-bottom: 2px solid transparent; transform: translateX(16px) translateY(-4px) rotate(30deg)"></div></div><div style="margin-left: auto;"> <div style=" width: 0px; border-top: 8px solid #F4F4F4; border-right: 8px solid transparent; transform: translateY(16px);"></div> <div style=" background-color: #F4F4F4; flex-grow: 0; height: 12px; width: 16px; transform: translateY(-4px);"></div> <div style=" width: 0; height: 0; border-top: 8px solid #F4F4F4; border-left: 8px solid transparent; transform: translateY(-4px) translateX(8px);"></div></div></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center; margin-bottom: 24px;"> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 224px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 144px;"></div></div></a><p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;"><a href="https://www.instagram.com/waseemgraphy/" style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none;" target="_blank">Shared post</a> on <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;">Time</time></p></div></blockquote><script src="https://www.instagram.com/embed.js"></script><script type="text/javascript" src="https://www.embedista.com/j/instagram.js"></script><div style="overflow: auto; position: absolute; height: 0pt; width: 0pt;"><a href="https://www.embedista.com/instagram">Embed Instagram Post</a> Code Generator</div></div><style>.boxes3{height:175px;width:153px;} #n img{max-height:none!important;max-width:none!important;background:none!important} #inst i{max-height:none!important;max-width:none!important;background:none!important}</style></div>
+      </div>
+    </div>
+  </section>
+
+{% endblock content %}

@@ -1,0 +1,57 @@
+{% extends 'background.html' %}
+{% load static%}
+{% load embed_video_tags %}
+{% block title %}Contact me{% endblock %}
+{% block content %}
+{% csrf_token %}
+  <!-- Contact Header -->
+  <header class="bg-light py-5 text-center">
+    <div class="container">
+      <h1 class="display-5">Contact Me</h1>
+      <p class="lead text-muted">I'd love to hear from you. Send a message below!</p>
+    </div>
+  </header>
+
+  <!-- Contact Form Section -->
+  <main class="container py-5">
+    <div class="row">
+      <!-- Contact Form -->
+      <div class="col-md-8">
+        <form>
+          <div class="mb-3">
+            <label for="name" class="form-label">Your Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Enter your name" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="email" class="form-label">Your Email</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="subject" class="form-label">Subject</label>
+            <input type="text" class="form-control" id="subject" placeholder="Subject of your message" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="message" class="form-label">Message</label>
+            <textarea class="form-control" id="message" rows="5" placeholder="Write your message here..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="col-md-4">
+        <div class="bg-light p-4 rounded shadow-sm">
+          <h5>Contact Info</h5>
+          <p><strong>Email:</strong> waseemscanva987@gmail.com</p>
+          <p><strong>insta:</strong> <a href="#">@waseemgraphy</a></p>
+          <p><strong>Location:</strong> Maldives</p>
+          <p class="text-muted small">Feel free to reach out for collaboration, questions, or just to say hi!</p>
+        </div>
+      </div>
+    </div>
+  </main>
+{% endblock content %}

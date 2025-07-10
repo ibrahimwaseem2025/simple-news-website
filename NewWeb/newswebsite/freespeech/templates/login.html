@@ -1,0 +1,82 @@
+{% extends 'background.html' %}
+{% load static%}
+{% load embed_video_tags %}
+{% block title %}Login page{% endblock %}
+{% block content %}
+{% csrf_token %}
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .login-container {
+      max-width: 400px;
+      margin: 80px auto;
+    }
+  </style>
+<div class="container-main-website">
+  <!-- Login Form -->
+  <div class="container login-container">
+    <div class="card shadow">
+      <div class="card-body">
+        <h3 class="card-title text-center mb-4 mt-4">Login to Your Account</h3>
+        <form method="post" id="contactForm" novalidate="novalidate">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <!--
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input class="form-control" id="username" type="text" name="username", placeholder ="username" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input class="form-control" id="password" type="password" name="password", placeholder ="password" required>
+          </div>
+
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="rememberMe">
+            <label class="form-check-label" for="rememberMe">Remember me</label>
+          </div>
+        -->
+          {% if user.is_authenticated %}
+            <h5></h5>
+          {% else %}
+            <input type="submit" value="login" class="btn btn-primary w-100">
+          {% endif %}
+        </form>
+        <div style="margin-top: 50px;">
+          {% if user.is_authenticated %}
+            <h5 style="margin: 5px 0px;">You are already logged in as "{{ user.username }}"</h5>
+            <a href="{% url 'logout_user' %}" style="text-decoration: none; color: white;">
+              <button class="lcmi-submit btn btn-primary w-100">
+                Logout
+              </button>                
+            </a>
+          {% else %}
+            <h5 style="margin: 5px 0px;">You are not logged in</h5>
+          {% endif %}
+        </div>
+
+        <div style="display: flex; flex-direction: column;">
+          <p class="mt-3 text-center">
+            Don't have an account? <a href="{% url 'user_register' %}">Register here</a>
+          </p>
+          {% if user.is_authenticated %}
+            <a href="{% url 'viewsarticle' %}" style="margin-top: 10px;">
+              <button class="lcmi-submit btn btn-secondary w-100" style="width: auto;">
+                view saved articles
+              </button>
+            </a> 
+          {% else %}
+          <p style="margin-top: 10px;">login for more interaction</p>
+          {% endif %}          
+        </div>
+        <p class="text-center">
+          <a href="#">Forgot password?</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

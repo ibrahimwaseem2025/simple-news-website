@@ -1,0 +1,21 @@
+/* myapp/static/myapp/css/custom_admin.css */
+.ck-content {
+  color: #212529;
+}
+
+.ck-content h1, .ck-content h2, .ck-content h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.ck-content p {
+  margin-bottom: 1rem;
+  font-size: 200px;
+}
+
+.ck-content img {
+    width: 100px;
+    height: auto;
+}
+

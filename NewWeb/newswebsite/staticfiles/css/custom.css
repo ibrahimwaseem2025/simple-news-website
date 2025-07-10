@@ -1,0 +1,35 @@
+.bento-item {
+    height: 200px;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.bento-item:hover {
+    transform: scale(1.05);
+}
+
+.bento-tall {
+    height: 410px;
+}
+
+.bento-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+}
+
+.bento-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.pagination .disabled .page-link {
+    pointer-events: none;
+}
